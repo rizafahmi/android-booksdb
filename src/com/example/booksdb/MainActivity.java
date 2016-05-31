@@ -11,5 +11,9 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		DBHelper db = new DBHelper(this);
+		
+		db.addBook(new Book("Android book", "Test"));
 	}
 }
