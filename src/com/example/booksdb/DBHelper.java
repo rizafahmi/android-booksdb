@@ -1,10 +1,14 @@
 package com.example.booksdb;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
 	
@@ -73,6 +77,32 @@ public class DBHelper extends SQLiteOpenHelper {
 		book.setAuthor(cursor.getString(2));
 		
 		return book;
+	}
+	
+	public List<Book> getAllBooks() {
+		List<Book> books = new LinkedList<Book>();
+		
+		String query = "SELECT * FROM " + TABLE_NAME;
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		
+		Book book = null;
+		
+		if (cursor.moveToFirst()) {
+			do {
+				book = new Book();
+				book.setId(Integer.parseInt(cursor.getString(0)));
+				book.setTitle(cursor.getString(1));
+				book.setAuthor(cursor.getString(2));
+				
+				books.add(book);
+			} while (cursor.moveToNext());
+			
+		}
+	
+		Log.d("getAllBooks()", books.toString());
+		return books;
 	}
 
 }

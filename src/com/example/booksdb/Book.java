@@ -1,6 +1,9 @@
 package com.example.booksdb;
 
 public class Book {
+
+	private int id;
+	private String title, author;
 	
 	public int getId() {
 		return id;
@@ -9,11 +12,6 @@ public class Book {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	private int id;
-	private String title, author;	
-	
-	
 	
 	public Book() {
 		
