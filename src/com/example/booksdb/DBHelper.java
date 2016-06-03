@@ -118,5 +118,14 @@ public class DBHelper extends SQLiteOpenHelper {
 		
 		return i;
 	}
+	
+	public void deleteBook(Book book) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		db.delete(TABLE_NAME, KEY_ID +" = ?", new String[] { String.valueOf(book.getId()) });
+		db.close();
+		
+		Log.d("deleteBook", book.toString());
+	}
 
 }
