@@ -104,5 +104,19 @@ public class DBHelper extends SQLiteOpenHelper {
 		Log.d("getAllBooks()", books.toString());
 		return books;
 	}
+	
+	public int updateBook(Book book) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+		values.put("title", book.getTitle());
+		values.put("author", book.getAuthor());
+		
+		int i = db.update(TABLE_NAME, values, KEY_ID+" = ?", new String[] { String.valueOf(book.getId())});
+		
+		db.close();
+		
+		return i;
+	}
 
 }
