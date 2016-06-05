@@ -11,9 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.support.v4.widget.SearchViewCompat;
+import android.widget.SearchView;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements SearchView.OnQueryTextListener {
 
+	private SimpleCursorAdapter adapter;
+	private SearchView searchView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,6 +35,8 @@ public class MainActivity extends Activity {
 		db.getAllBooks();
 		
 		populateListView();
+		
+		searchView.setOnQueryTextListener(this);
 	}
 	
 	private void populateListView() {
@@ -41,7 +48,7 @@ public class MainActivity extends Activity {
 		
 		
 		// Initiate Cursor Adapter
-		SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+		adapter = new SimpleCursorAdapter(
 				this, R.layout.item_list,
 				cursor,
 				new String[] {DBHelper.KEY_TITLE, DBHelper.KEY_AUTHOR},
@@ -57,5 +64,17 @@ public class MainActivity extends Activity {
 		
 		db.close();
 		
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		adapter.getFilter().filter(newText);
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String query) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
