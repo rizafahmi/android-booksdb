@@ -85,6 +85,13 @@ public class DBHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		return db.rawQuery(query, null);
 	}
+	public Cursor searchBooksCursor(String text) {
+		String query = "SELECT rowid AS _id, * FROM " + TABLE_NAME + 
+				" WHERE " + KEY_TITLE + " LIKE '%" + text + "%' ";
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		return db.rawQuery(query, null);
+	}
 	
 	public List<Book> getAllBooks() {
 		List<Book> books = new LinkedList<Book>();
