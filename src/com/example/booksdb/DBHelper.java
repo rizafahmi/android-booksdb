@@ -16,9 +16,9 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 1;
 	private static final String TABLE_NAME = "books";
 	
-	private static final String KEY_ID = "id";
-	private static final String KEY_TITLE = "title";
-	private static final String KEY_AUTHOR = "author";
+	public static final String KEY_ID = "id";
+	public static final String KEY_TITLE = "title";
+	public static final String KEY_AUTHOR = "author";
 	
 	private static final String[] COLUMNS = {KEY_ID, KEY_TITLE, KEY_AUTHOR};
 	
@@ -77,6 +77,13 @@ public class DBHelper extends SQLiteOpenHelper {
 		book.setAuthor(cursor.getString(2));
 		
 		return book;
+	}
+	
+	public Cursor getAllBooksCursor() {
+		String query = "SELECT rowid AS _id, * FROM " + TABLE_NAME;
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		return db.rawQuery(query, null);
 	}
 	
 	public List<Book> getAllBooks() {
